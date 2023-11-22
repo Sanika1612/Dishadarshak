@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang='en'>
+  <head>
+    <meta charset='utf-8' />I
+    <title>Disha-darshak</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.js'></script>
+    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v2.14.1/mapbox-gl.css' rel='stylesheet' />
+    <link href="style1.css"rel="stylesheet">
+    
+  </head>
+  <body>
+    <section id="sec">
+    <div id='first'>Dishadarshak</div>
+    <div id="second">
+      <div id='map'></div>
+      <div id="instructions"></div>
+    </div>
+    </section>
+    <script>
+      // add the JavaScript here
+      mapboxgl.accessToken = 'pk.eyJ1Ijoic2FuaWthMTgiLCJhIjoiY2xvZmJ1Z2NvMG1nOTJxcWUxanp0ZmZzZCJ9.PG06PrqWVeTPhPXMyu3gmQ';
+      const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/sanika18/cloiqfooc001q01nzf9wt5zb8',
+        center: [74.60177881264056, 16.844111793590876], // Default starting position
+        zoom: 5
+      });
+
+      // set the bounds of the map
+      const bounds = [
+        [74.480000, 16.842154],
+        [74.603202, 16.855555]
+      ];
+      map.setMaxBounds(bounds);
+
+      let start; // User's current location
+
+      // Get the user's current location
+      navigator.geolocation.getCurrentPosition((position) => {
+        start = [position.coords.longitude, position.coords.latitude];
+        map.setCenter(start);
+        // Add starting point to the map
+        map.addLayer({
+          id: 'point',
+          type: 'circle',
+          source: {
+            type: 'geojson',
+            data: {
+              type: 'FeatureCollection',
+              features: [
+                {
+                  type: 'Feature',
+                  properties: {},
+                  geometry: {
+                    type: 'Point',
+                    coordinates: start
+                  }
+                }
+              ]
+            }
+          },
+          paint: {
+            'circle-radius': 10,
+            'circle-color': '#3887be'
+          }
+        });
+      });
+
+      // Function to make a directions request
+      async function getRoute(end) {
+        // Make a directions request using cycling profile
+        const query = await fetch(
+          `https://api.mapbox.com/directions/v5/mapbox/walking/${start[0]},${start[1]};${end[0]},${end[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`,
+          { method: 'GET' }
+        );
+        const json = await query.json();
+        const data = json.routes[0];
+        const route = data.geometry.coordinates;
+        const geojson = {
+          type: 'Feature',
+          properties: {},
+          geometry: {
+            type: 'LineString',
+            coordinates: route
+          }
+        };
+        // If the route already exists on the map, reset it using setData
+        if (map.getSource('route')) {
+          map.getSource('route').setData(geojson);
+        } else {
+          map.addLayer({
+            id: 'route',
+            type: 'line',
+            source: {
+              type: 'geojson',
+              data: geojson
+            },
+            layout: {
+              'line-join': 'round',
+              'line-cap': 'round'
+            },
+            paint: {
+              'line-color': '#3887be',
+              'line-width': 5,
+              'line-opacity': 0.75
+            }
+          });
+        }
+        // Add turn instructions
+        const instructions = document.getElementById('instructions');
+        const steps = data.legs[0].steps;
+        let tripInstructions = '';
+        for (const step of steps) {
+          tripInstructions += `<li>${step.maneuver.instruction}</li>`;
+        }
+        instructions.innerHTML = `<p><strong>Trip duration: ${Math.floor(
+          data.duration / 60
+        )} min 🚶 </strong></p><ol>${tripInstructions}</ol>`;
+      }
+
+      // Event listener for map click
+      map.on('click', (event) => {
+        const coords = Object.keys(event.lngLat).map((key) => event.lngLat[key]);
+        const end = {
+          type: 'FeatureCollection',
+          features: [
+            {
+              type: 'Feature',
+              properties: {},
+              geometry: {
+                type: 'Point',
+                coordinates: coords
+              }
+            }
+          ]
+        };
+        if (map.getLayer('end')) {
+          map.getSource('end').setData(end);
+        } else {
+          map.addLayer({
+            id: 'end',
+            type: 'circle',
+            source: {
+              type: 'geojson',
+              data: {
+                type: 'FeatureCollection',
+                features: [
+                  {
+                    type: 'Feature',
+                    properties: {},
+                    geometry: {
+                      type: 'Point',
+                      coordinates: coords
+                    }
+                  }
+                ]
+              }
+            },
+            paint: {
+              'circle-radius': 10,
+              'circle-color': '#f30'
+            }
+          });
+        }
+        getRoute(coords);
+      });
+
+    </script>
+  </body>
+</html>
