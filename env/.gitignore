@@ -1,0 +1,12 @@
+# created by virtualenv automatically
+# Ignore Python bytecode files
+*.pyc
+
+# Ignore virtual environment directories
+venv/
+env/
+
+# Ignore IDE and editor files
+.vscode/
+.idea/
+

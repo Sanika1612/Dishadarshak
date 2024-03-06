@@ -1,0 +1,92 @@
+        /* *{
+        margin: 0;
+        padding: 0;
+      }
+
+
+      #sec{
+        display: flex;
+        flex-direction: column;
+        width:100%;
+        height: 100%;;
+      }
+      #map {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        width: 100%;
+      }
+      #instructions {
+        position: absolute;
+        margin: 20px;
+        width: 25%;
+        top: 0;
+        bottom: 20%;
+        padding: 20px;
+        background-color: #fff;
+        overflow-y: scroll;
+        font-family: sans-serif;
+      } */
+
+
+      /* Reset some default styles */
+/* Reset some default styles */
+body, h1, h2, p, ol, ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    background-color: #222; /* Dark background color for the body */
+    color: #fff; /* Light text color */
+  }
+  
+  /* Style the section with the ID 'sec' */
+  #sec {
+    background-color: #333; /* Darker background color for the section */
+    padding: 20px;
+  }
+  
+  /* Style the 'Dishadarshak' div */
+  #first {
+    padding-left: 600px;
+    font-size: 35px;
+    font-weight: bold;
+    color: #fff; /* Light text color */
+  }
+  
+  
+  
+  /* Style the second div */
+  #second {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    background-color: #444; /* Dark background color for the second div */
+    margin-top: 20px; /* Add some space at the top */
+    padding: 20px;
+    margin-bottom: 0px;
+    border-radius: 8px; /* Add rounded corners */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5); /* Add a subtle shadow */
+  }
+  
+  /* Style the map container */
+  #map {
+    height: 700px; /* Set the desired height for your map */
+    border: 1px solid #555; /* Darker border color */
+  }
+  
+  /* Style the instructions div */
+  #instructions {
+    position: absolute;
+    margin-top: 20px;
+    margin-left:15px;
+    background-color: #413f3f;
+    padding: 10px;
+    padding-left: 30px;
+    border-radius: 10px;
+  }
+  /* Add more styles as needed */
+  

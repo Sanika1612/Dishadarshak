@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>title</title>
+    <link rel="stylesheet" href="home.css">
+    <style>
+      .wrapper {
+          height: 100vh;
+          background-image: url("{{ url_for('static', filename='images/gps1.jpg') }}");
+        
+          background-position: center center; /* Center the background image */
+    background-repeat: no-repeat; /* Prevent background image from repeating */
+    background-size: cover; /* Cover the entire container with the background image */
+    height: 100vh;
+      }
+      /* Other styles can go here */
+  </style>
+  <link rel="stylesheet" href="{{ url_for('static', filename='home.css') }}">
+    
+  </head>
+  <body>
+    <div class="wrapper">
+        <div class="title">Welcome to Dishadarshak</div>
+        <div class="name">
+            DISHADARSHAK
+        </div>
+        <div class="info">
+            "Voice-guided navigation for seamless travel - simply ask for directions from your current location to your destination, and our website provides clear, voice-based directions to guide you on your journey."
+        </div>
+        <a href="{{ url_for('index') }}"><button class="button">CLICK ME</button></a>
+    </div>
+  </body>
+</html>

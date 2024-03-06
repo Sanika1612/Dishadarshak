@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Directions</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        h1 {
+            color: #3887be;
+        }
+
+        ol {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Turn-by-Turn Directions</h1>
+    
+    {% if directions %}
+        <p><strong>Total Duration: {{ directions.routes[0].duration_in_traffic.text }}</strong></p>
+        <ol>
+            {% for step in directions.routes[0].legs[0].steps %}
+                <li>{{ step.maneuver.instruction }}</li>
+            {% endfor %}
+        </ol>
+    {% else %}
+        <p>No directions available.</p>
+    {% endif %}
+</body>
+</html>
