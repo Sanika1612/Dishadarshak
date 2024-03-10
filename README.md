@@ -5,8 +5,8 @@ First, clone this repository:
 
 <!-- start:code block -->
 # Clone this repository
-git clone https://github.com/mfts/papermark.git
-cd papermark
+git clone [https://github.com/Sanika1612/Dishadarshak.git]<br>
+cd Dishadarshak
 # Install Python
 
 # Create env 
